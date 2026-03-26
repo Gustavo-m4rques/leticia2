@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Letícia 💜</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: black;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* VÍDEO DE FUNDO */
+        video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1000;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            filter: brightness(0.4);
+        }
+
+        /* CONTAINER CENTRALIZADO E COM TAMANHO TRAVADO */
+        .container {
+            width: 100%;
+            max-width: 450px; /* Impede que as caixas fiquem prolongadas */
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: #ffeb3b;
+            text-shadow: 0 0 20px rgba(255, 235, 59, 0.8);
+            margin-bottom: 5px;
+        }
+
+        .subtitulo {
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            margin-bottom: 30px;
+            color: #d1b3ff;
+        }
+
+        /* ESTILO DAS CAIXAS (GLASSMORPHISM) */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+        }
+
+        .interaction-title {
+            color: #ffeb3b;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #timer { font-size: 1.4rem; font-weight: bold; color: #ffeb3b; }
+
+        button {
+            background: #ffeb3b;
+            color: #212121;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover { transform: scale(1.05); background: white; }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 15px;
+            border: none;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            margin-bottom: 10px;
+            resize: none;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .post-it {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 10px;
+            text-align: left;
+            border-left: 4px solid #ffeb3b;
+            font-size: 0.9rem;
+        }
+
+        footer { margin-top: 40px; font-size: 0.7rem; opacity: 0.6; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline>
+        <source src="rapunzel.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
+        <h1>Letícia</h1>
+        <p class="subtitulo">NOSSO MOMENTO DE BRILHAR 💜</p>
+        
+        <div class="glass-box">
+            <p class="interaction-title">Nossa Trilha Sonora 🎵</p>
+            <iframe style="border-radius:12px" 
+                src="https://open.spotify.com/embed/album/3ukkRHDHbN8tNRPKsGZR1h" 
+                width="100%" 
+                height="152" 
+                frameBorder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="glass-box">
+            <p class="interaction-title">Desde que nos conhecemos</p>
+            <div id="timer">Calculando...</div>
+        </div>
+
+        <div class="glass-box">
+            <p class="interaction-title">Ideias para hoje</p>
+            <div id="date-roulette" style="margin-bottom: 10px; font-style: italic; font-size: 0.9rem;">Clique para uma surpresa!</div>
+            <button onclick="sortearEncontro()">Sortear Plano 🎲</button>
+        </div>
+
+        <div class="glass-box">
+            <p class="interaction-title">Recadinhos</p>
+            <textarea id="msg" placeholder="Escreva algo especial..."></textarea>
+            <button onclick="postar()">Enviar Recado ✉️</button>
+            <div id="mural"></div>
+        </div>
+
+        <footer>FEITO COM AMOR POR GUSTAVO</footer>
+    </div>
+
+    <script>
+        // DATA AJUSTADA: 8 de Dezembro de 2025
+        const dataInicio = new Date('2025-12-08T00:00:00'); 
+
+        function atualizar() {
+            const agora = new Date();
+            const diff = agora - dataInicio;
+            
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff / 3600000) % 24);
+            const m = Math.floor((diff / 60000) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            
+            document.getElementById('timer').innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+        }
+        setInterval(atualizar, 1000);
+        atualizar();
+
+        const encontros = ["Noite de Filmes Disney 🏰", "Jantar Romântico 🕯️", "Passeio Estelar ✨", "Cozinhar Juntos 🍳", "Ir tomar Sorvete 🍦", "Dançar na Sala 💃"];
+        function sortearEncontro() {
+            const r = Math.floor(Math.random() * encontros.length);
+            document.getElementById('date-roulette').innerText = encontros[r];
+        }
+
+        function postar() {
+            const t = document.getElementById('msg');
+            if(!t.value.trim()) return;
+            const r = JSON.parse(localStorage.getItem('mural_gustavo_v3')) || [];
+            r.push({txt: t.value});
+            localStorage.setItem('mural_gustavo_v3', JSON.stringify(r));
+            t.value = "";
+            show();
+        }
+
+        function show() {
+            const m = document.getElementById('mural');
+            const r = JSON.parse(localStorage.getItem('mural_gustavo_v3')) || [];
+            m.innerHTML = r.reverse().slice(0, 3).map(i => `<div class="post-it"><p>${i.txt}</p></div>`).join('');
+        }
+        show();
+    </script>
+</body>
+</html>
